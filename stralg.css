@@ -1,0 +1,215 @@
+
+body {
+    margin-top: 10px;
+}
+
+.aux-string,
+.monospace-string {
+    font-family: monospace;
+    padding: 1px;
+}
+.aux-string {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: white;
+    margin: 2px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+.monospace-string .slot {
+    display: inline-block;
+    position: relative;
+    width: 2em;
+    height: 2em;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: white;
+    margin: 4px 2px 0px 2px;
+    box-sizing: border-box;
+}
+.monospace-string .slot.transparent {
+    border: transparent;
+    background: transparent;
+}
+.aux-string {
+    font-weight: bold;
+}
+.monospace-string .letter {
+    position: absolute;
+    left: 0.4em;
+    bottom: 0.1em;
+    text-align: middle;
+    font-weight: bold;
+}
+.monospace-string .index {
+    position: absolute;
+    right: 2px;
+    top: 0px;
+    font-size: 70%;
+    color: #888;
+}
+.aux-string.match,
+.monospace-string .slot.match {
+    background: #cfc;
+}
+.aux-string.mismatch,
+.monospace-string .slot.mismatch {
+    background: #fcc;
+}
+.aux-string.found,
+.monospace-string .slot.found {
+    background: #ddbbff;
+}
+.aux-string.cursor,
+.monospace-string .slot.cursor {
+    background: #ccf;
+}
+
+
+.aux-string.match,
+.help.match,
+.monospace-string .slot.match .letter {
+    color: #080;
+}
+.aux-string.mismatch,
+.help.mismatch,
+.monospace-string .slot.mismatch .letter {
+    color: #800;
+}
+.aux-string.found,
+.help.found,
+.monospace-string .slot.found .letter {
+    color: #5d478b;
+}
+.aux-string.cursor,
+.help.cursor,
+.monospace-string .slot.cursor .letter {
+    color: #008;
+}
+
+
+.monospace-string .slot .index.match,
+.monospace-string .slot .index.mismatch,
+.monospace-string .slot .index.cursor,
+.monospace-string .slot .index.found {
+    font-weight: bold;
+    border: 1px solid #888;
+    border-radius: 0.8em;
+    box-sizing: border-box;
+    right: -3px;
+    top: -3px;
+    text-align: center;
+    min-width: 1.6em;
+}
+.monospace-string .slot .index.match {
+    color: #0c0;
+    background: #cfc;
+}
+.monospace-string .slot .index.mismatch {
+    color: #c00;
+    background: #fcc;
+}
+.monospace-string .slot .index.found {
+    color: #7d57cb;
+    background: #ddbbff;
+}
+.monospace-string .slot .index.cursor {
+    color: #00c;
+    background: #ccf;
+}
+
+.monospace-string .slot .letter.match {
+    color: #0c0;
+}
+.monospace-string .slot .letter.mismatch {
+    color: #c00;
+}
+.monospace-string .slot .letter.found {
+    color: #7d57cb;
+}
+.monospace-string .slot .letter.cursor {
+    color: #00c;
+}
+
+div#story-area hr {
+    border-width: 1px;
+    border-color: black;
+    margin: 0px;
+}
+
+#Container {
+    position: relative;
+}
+#HelpContainer {
+    display: block;
+    position: absolute;
+    right: 10px;
+    left: 20px;
+    top: 5px;
+    background: #e0e0ff;
+    z-index: 2;
+}
+.hidden,
+#HelpContainer.hidden {
+    display: none;
+}
+.well.pad-for-help-button {
+    padding-right: 49px;
+}
+.help-button {
+    position: absolute;
+    right: 25px;
+    top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0px 9px;
+}
+.help-button.close-help {
+    right: 10px;
+}
+
+@media (max-width: 699px) {
+    .monospace-string .slot {
+        width: 1.2em;
+        height: 3em;
+    }
+    .monospace-string .index,
+    .monospace-string .letter {
+        text-align: center;
+        right: 0px;
+        left: 0px;
+    }
+    .monospace-string .slot .index.match,
+    .monospace-string .slot .index.mismatch,
+    .monospace-string .slot .index.found {
+        right: 0px;
+        left: 0px;
+    }
+}
+
+#shade {
+    position:absolute;
+    top:0px;
+    right:0px;
+    left:0px;
+    bottom:0px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+img {
+    border:1px solid black;
+    width: 100%;
+}
+
+dl.dl-horizontal dt{
+    text-align: left;
+}
+
+.image-description dt::first-letter {
+    color:red;
+}
+h3 {
+    text-decoration: underline;
+}
