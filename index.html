@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>String Algorithms</title>
+    <script src="jquery-2.1.0.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="handlebars-v1.3.0.js"></script>
+    <script src="stralg-init.js"></script>
+    <script src="alg-trivial.js"></script>
+    <script src="alg-border-array.js"></script>
+    <script src="alg-shift-and-table.js"></script>
+    <script src="alg-bm-array1.js"></script>
+    <script src="alg-bm1.js"></script>
+    <script src="alg-shift-and.js"></script>
+    <script src="alg-kmp.js"></script>
+    <script src="alg-rk.js"></script>
+    <script src="alg-edit-distance.js"></script>
+    <script src="alg-witness.js"></script>
+    <script src="stralg.js"></script>
+    <!-- css including here -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="stralg.css" />
+</head>
+<body>
+<div id="Container" class="container">
+    <div class="container"></div>
+    <div class="well pad-for-help-button">
+        <div class="form-group row">
+            <div class="col-md-6 col-sm-8">
+                <select id="algorithm-type" class="form-control">
+                    <option value="exact">
+                        Exact Algorithms
+                    </option>
+
+                    <option value="support">
+                        Support Algorithms
+                    </option>
+
+                    <option value="approximate">
+                        Approximate Algorithms
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6 col-sm-8">
+                <select id="algorithm-select" class="form-control">
+                    <!-- this gets rewritten by js with the algorithms we have
+                         implemented -->
+                    <option value="trivial">
+                        Trivial
+                    </option>
+                    <option value="kmp">
+                        Knuth-Morris-Pratt (KMP)
+                    </option>
+                    <option value="bm">
+                        Boyer-Moore (BM)
+                    </option>
+                    <option value="rk">
+                        Rabin-Karp (RK)
+                    </option>
+                    <option value="shift_and">
+                        Shift-And
+                    </option>
+                    <option value="shift_or">
+                        Shift-Or
+                    </option>
+                    <option value="bndm">
+                        Backward Nondeterministic Dawg Matching (BNDM)
+                    </option>
+                    <option value="ac">
+                        Aho-Corasick (AC)
+                    </option>
+                    <option value="elimination">
+                        Elimination
+                    </option>
+                </select>
+            </div>
+        </div>
+        <button title="Open help" type="button" class="btn btn-info help-button open-help">?</button>
+    </div>
+
+    <div class="well pad-for-help-button">
+        <div class="row">
+            <div class="col-md-6 col-sm-8">
+                <div class="form-group">
+                    <input id="text-field" type="text" placeholder="Text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-9">
+                <div class="form-group">
+                    <input id="pattern-field" type="text" placeholder="Pattern" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div id="controller" class="controller_deactivated active">
+            <div class="row">
+                <div class="col-md-6 col-sm-8">
+                    <div class="form-group">
+                        <button title="Accept inputs &#010;hotkey: 9" id="select-story" name="button" value="OK" type="button" class="btn btn-success"> OK </button>
+                        <button title="Clear inputs &#010;hotkey: 0"  id="clear-all" name="button" value="Clear" type="button" class="btn btn-danger"> Clear </button>
+            			<select title="Speed multiplier &#010;hotkey: +/-" id="speed" class="selectpicker">
+                            <option value="0.25">0.25x</option>
+                			<option value="0.50">0.50x</option>
+                			  <option selected value="1.00">1.00x</option>
+                			  <option value="1.50">1.50x</option>
+                			  <option value="2.00">2.00x</option>
+                			  <option value="2.50">2.50x</option>
+                			  <option value="3.00">3.00x</option>
+            			</select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-8 form-group">
+                        <button title="To the beginning &#010;hotkey: 1" id="start" class="btn glyphicon glyphicon-fast-backward"></button>
+                        <button title="Previous chapter &#010;hotkey: 2" id="prev_chapter" class="btn glyphicon glyphicon-step-backward"></button>
+                        <button title="Previous step &#010;hotkey: 3" id="prev_step" class="btn glyphicon glyphicon-chevron-left"></button>
+                        <button title="Play/Pause &#010;hotkey: 4" id="play-pause" class="btn glyphicon glyphicon-play"></button>
+                        <button title="Next step &#010;hotkey: 5" id="next_step" class="btn glyphicon glyphicon-chevron-right"></button>
+                        <button title="Next chapter &#010;hotkey: 6" id="next_chapter" class="btn glyphicon glyphicon-step-forward"></button>
+                        <button title="To the end &#010;hotkey: 7" id="end" class="btn glyphicon glyphicon-fast-forward"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="table-placeholder">
+            <!-- filled with js -->
+        </div>
+        <ul id="support-links">
+        </ul>
+        <div id="story-area">
+        </div>
+    </div>
+    <div id="HelpContainer" class="well hidden">
+        <button type="button" class="btn btn-danger help-button close-help">X</button>
+        <h3>Usage of String Algorithms</h3>
+        <p>
+            This section explains how to use the user interface. There is a screenshot of UI below and explanation of each graphic element. Each row (numbered from 1 to 7) contains graphic elements that are explained below. General tips: hovering the mouse over buttons shows additional information.
+        </p>
+        <p><img src="document_mainUI.png"/></p>
+        <dl class="dl-horizontal image-description">
+            <dt> 1 Algorithm Type</dt>
+            <dd> Algorithm types such as "Exact Algorithms", "Support Algorithms" and "Approximate Algorithms". Exact and Approximate algorithms might use support algorithms. Support algorithms such as Border Array, Shift-And table, Boyer Moore Array1 (an array for bad character rule) and Witness Array.</dd>
+            <dt> 2 Algorithms</dt>
+            <dd> List of algorithms for the selected algorithm type.</dd>
+            <dt> 3 Text field</dt>
+            <dd> Exact algorithms use this field as a text to search the pattern from. Currently only implemented approximate algorithm, edit distance, uses text and pattern for calculating distance table. Support algorithms don't this field at all.</dd>
+            <dt> 4 Pattern field</dt>
+            <dd> Exact algorithms search the pattern from the text. Edit distance (approximate algorithm) uses this as a second input. Support algorithms use this field to build an array or dictionary.</dd>
+            <dt> 5 OK/Clear/Speed</dt>
+            <dd> OK button accepts inputs from text and pattern field and invoke selected algorithm with given inputs. Any changed settings will take effect after clicking the OK button. Clear button clears text and pattern field. Speed multiplier adjust the speed when playing (play button). </dd>
+            <dt> 6 State controller</dt>
+            <dd> Each button will change the state of visualization. The outermost buttons will either start the simulation from the beginning to go to the end. The next buttons are previous chapter and next chapter, which jump one chapter forward/backward. After chapter movements buttons are next step and previous step, which are the finest grained control over the simulation. Lastly, the middle button is play/pause button, which move one step forward automatically with the speed specified by the speed multiplier.</dd>
+            <dt> 7 Visualization</dt>
+            <dd> The visualization of the algorithm is shown here. Certain algorithms have a link to a support algorithm (and back to the supported algorithm), which user can use to recap how the array or dictionary is built. Do not use browser's own back and forward button.</dd>
+        </dl>
+
+        <h3>Color codes</h3>
+        <dl class="dl-horizontal">
+            <dt class="help cursor"> Blue </dt>
+            <dd> Blue implies characters we are dealing with</dd>
+            <dt class="help match"> Green </dt>
+            <dd> Green implies okay, e.g. matched characters</dd>
+            <dt class="help mismatch"> Red </dt>
+            <dd> Red implies not okay, e.g. mismatched characters</dd>
+            <dt class="help found"> Purple </dt>
+            <dd> Purple implies pattern found</dd>
+        </dl>
+
+        <h3>Copyright &copy;</h3>
+        <p>Nguyen Tam and Rasa Marko</p>
+    </div>
+</div>
+
+<div id="shade" class="hidden">
+
+    </div>
+
+
+<script type="text/template" id="table-template">
+    <div>
+        <h2>header</h2>
+        <p>
+            paragraph {{foo}}.
+        </p>
+        <p>
+          para {{bar}}.
+          </p>
+    </div>
+</script>
+
+<script type="text/template" id="example-template">
+    <div>
+        <h2>header</h2>
+        <p>
+            paragraph {{foo}}.
+        </p>
+        <p>
+            para {{bar}}.
+        </p>
+    </div>
+</script>
+
+<script type="text/template" id="monospace-string">
+    <div class="monospace-string">
+        {{#each pad}}<span
+            class="slot transparent">
+        </span
+        >{{/each}}{{#each array}}<span
+            class="slot {{cls}}" data-index="{{index}}" data-letter="{{this}}">
+                <span class="index {{index_cls}}">{{index}}</span>
+                <span class="letter {{letter_cls}}">{{letter}}</span>
+            </span
+        >{{/each}}
+    </div>
+</script>
+
+<script type="text/template" id="horizontal-rule">
+    <hr/>
+</script>
+
+
+<script type="text/template" id="algorithm-option-template">
+    {{#each algorithms}}
+        <option value="{{key}}">{{name}}</option>
+    {{/each}}
+</script>
+
+<script type="text/template" id="example-for-2d">
+    <table>
+    {{#each arr}}
+        <tr>
+        {{#each this}}
+            <td>
+            {{this}}
+            </td>
+        {{/each}}
+        </tr>
+    {{/each}}
+    </table>
+</script>
+
+<script type="text/template" id="auxiliary-string">
+    <div class="">
+        <span class="aux-string {{cls}}">
+            {{string}}
+        </span>
+    </div>
+</script>
+
+<script type="text/template" id="alg-header">
+    <h4>
+        {{name}}
+    </h4>
+</script>
+<script type="text/template" id="support-link">
+    <a class="support-link" href="#" data-support-idx="{{i}}">
+        {{prefix}}{{name}}
+    </a>
+</script>
+
+</body>
+</html>
